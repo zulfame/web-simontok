@@ -27,8 +27,9 @@ class Monitoring extends CI_Controller
         }
 
         // konfigurasi pagination
-        $this->db->like('debitur_code', $data['keyword']);
-        $this->db->from('tunggakan');
+        $this->db->like('kd_credit', $data['keyword']);
+        $this->db->or_like('nama_debitur', $data['keyword']);
+        $this->db->from('debitur');
 
         $config['base_url']     = site_url('monitoring/debitur');
         $config['total_rows']   = $this->Monitoring_Model->CountDebitur();
@@ -109,9 +110,8 @@ class Monitoring extends CI_Controller
         $sheet->setCellValue('P3', "Tgk. Pokok");
         $sheet->setCellValue('Q3', "Tgk. Bunga");
         $sheet->setCellValue('R3', "Tgk. Denda");
-        $sheet->setCellValue('S3', "HR-P");
-        $sheet->setCellValue('T3', "HR-B");
-        $sheet->setCellValue('U3', "Petugas");
+        $sheet->setCellValue('S3', "HR-T");
+        $sheet->setCellValue('T3', "Petugas");
 
         // Apply style header
         $sheet->getStyle('A3')->applyFromArray($style_col);
@@ -134,7 +134,6 @@ class Monitoring extends CI_Controller
         $sheet->getStyle('R3')->applyFromArray($style_col);
         $sheet->getStyle('S3')->applyFromArray($style_col);
         $sheet->getStyle('T3')->applyFromArray($style_col);
-        $sheet->getStyle('U3')->applyFromArray($style_col);
 
         // Panggil function view
         $debitur = $this->Monitoring_Model->ExportDebitur();
@@ -155,14 +154,13 @@ class Monitoring extends CI_Controller
             $sheet->setCellValue('K' . $numrow, $data['tgl_jth_tempo']);
             $sheet->setCellValue('L' . $numrow, $data['rate']);
             $sheet->setCellValue('M' . $numrow, "Rp. " . rupiah($data['plafond']));
-            $sheet->setCellValue('N' . $numrow, "Rp. " . rupiah($data['baki_debet']));
+            $sheet->setCellValue('N' . $numrow, "Rp. " . rupiah($data['os_akhir']));
             $sheet->setCellValue('O' . $numrow, $data['call']);
-            $sheet->setCellValue('P' . $numrow, "Rp. " . rupiah($data['tgk_pokok']));
-            $sheet->setCellValue('Q' . $numrow, "Rp. " . rupiah($data['tgk_bunga']));
-            $sheet->setCellValue('R' . $numrow, "Rp. " . rupiah($data['tgk_denda']));
-            $sheet->setCellValue('S' . $numrow, $data['hari_pokok']);
-            $sheet->setCellValue('T' . $numrow, $data['hari_bunga']);
-            $sheet->setCellValue('U' . $numrow, $data['name']);
+            $sheet->setCellValue('P' . $numrow, "Rp. " . rupiah($data['tunggakan_p']));
+            $sheet->setCellValue('Q' . $numrow, "Rp. " . rupiah($data['tunggakan_b']));
+            $sheet->setCellValue('R' . $numrow, "Rp. " . rupiah($data['tunggakan_d']));
+            $sheet->setCellValue('S' . $numrow, $data['tunggakan_h']);
+            $sheet->setCellValue('T' . $numrow, $data['name']);
 
             // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
@@ -185,7 +183,6 @@ class Monitoring extends CI_Controller
             $sheet->getStyle('R' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('S' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('T' . $numrow)->applyFromArray($style_row);
-            $sheet->getStyle('U' . $numrow)->applyFromArray($style_row);
 
             $no++; // Tambah 1 setiap kali looping
             $numrow++; // Tambah 1 setiap kali looping
@@ -211,8 +208,7 @@ class Monitoring extends CI_Controller
         $sheet->getColumnDimension('Q')->setWidth(20);
         $sheet->getColumnDimension('R')->setWidth(20);
         $sheet->getColumnDimension('S')->setWidth(5);
-        $sheet->getColumnDimension('T')->setWidth(5);
-        $sheet->getColumnDimension('U')->setWidth(20);
+        $sheet->getColumnDimension('T')->setWidth(20);
 
         // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
@@ -405,7 +401,7 @@ class Monitoring extends CI_Controller
         $data['site']           = $this->Site_Model->GetData();
         $data['user']           = $this->User_Model->GetProfile();
         $data['pelaksanaan']    = ['Penagihan ke Rumah Debitur', 'Lainnya'];
-        $data['hasil']          = ['Bayar Full Tunggakan', 'Topup', 'Lainnya'];
+        $data['hasil']          = ['Bayar Full Tunggakan', 'Janji Bayar', 'Topup', 'Lainnya'];
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $data);

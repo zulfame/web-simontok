@@ -27,14 +27,7 @@
                 </li>
             <?php endforeach; ?>
 
-            <?php foreach ($st_wo as $s) :
-                $ket = $s['pelaksanaan'];
-                if ($ket == NULL) {
-                    $hasil = "<span class='badge badge-danger'>Empty</span>";
-                } else {
-                    $hasil = "<span class='badge badge-success'>Done</span>";
-                }
-            ?>
+            <!-- <?php foreach ($st_wo as $s) : ?>
                 <li>
                     <a href="<?= base_url('mobile/tugas/report_wo/') . $s['id_st'] . "/" . $s['kd_credit']; ?>" class=" item">
                         <div class="icon-box bg-secondary">
@@ -46,7 +39,7 @@
                         </div>
                     </a>
                 </li>
-            <?php endforeach; ?>
+            <?php endforeach; ?> -->
 
             <!-- Alert Massage -->
             <?php if (empty($st || $st_wo)) : ?>

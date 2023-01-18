@@ -16,14 +16,14 @@
         <div class="box box-<?= $site['line']; ?>">
             <div class="box-header with-border bg-<?= $site['color']; ?>">
                 <div class="box-tools pull-left">
-                    <a href="<?= base_url('telebilling/export_debitur'); ?>" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-file-excel-o"></i>&nbsp; EXPORT</a>
+                    <a href="<?= base_url('telebilling/export_today'); ?>" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-file-excel-o"></i>&nbsp; EXPORT</a>
                     <a href="<?= base_url('telebilling/report_today'); ?>" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i>&nbsp; PRINT</a>
                 </div>
 
                 <div class="box-tools">
                     <form action="<?= base_url('telebilling/today') ?>" method="POST">
                         <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="date" name="keyword" class="form-control pull-right" value="<?= date('Y-m-d'); ?>">
+                            <input type="date" name="keyword" class="form-control pull-right">
                             <div class="input-group-btn">
                                 <input type="submit" class="btn btn-default" name="submit" value="Search">
                             </div>
@@ -36,11 +36,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="box-body table-responsive no-padding">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" style="font-size: 13px;">
                                 <thead>
                                     <tr>
                                         <th class="text-center" width="4%">No</th>
-                                        <th class="text-center">Date</th>
                                         <th class="text-center">Name</th>
                                         <th class="text-center">Telp</th>
                                         <th class="text-center">Result</th>
@@ -60,7 +59,6 @@
                                     ?>
                                         <tr>
                                             <td class="text-center"><?= ++$page; ?></td>
-                                            <td class="text-center"><?= $s['tgl']; ?></td>
                                             <td><?= $s['nama_debitur']; ?></td>
                                             <td><?= $s['telepon']; ?></td>
                                             <td><?= $s['hasil']; ?></td>

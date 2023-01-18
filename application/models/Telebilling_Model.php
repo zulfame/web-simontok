@@ -5,189 +5,196 @@ class Telebilling_Model extends ci_Model
     public function GetDebiturKalijati($limit, $start, $keyword = null)
     {
         if ($keyword) {
-            $this->db->like('hari_pokok', $keyword);
+            $this->db->like('tunggakan_h', $keyword);
         }
 
         $region = "KALIJATI";
-
-        $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, kd_petugas, wilayah, telepon');
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        // $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
         $this->db->where('wilayah', $region);
-        $this->db->order_by('hari_pokok', 'ACS');
-        return $this->db->get('tunggakan', $limit, $start)->result_array();
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
+        $this->db->order_by('tunggakan_h', 'ACS');
+        return $this->db->get('debitur', $limit, $start)->result_array();
     }
 
     public function CountDebiturKalijati()
     {
         $region = "KALIJATI";
 
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        $this->db->where('debitur.wilayah', $region);
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
+        $this->db->where('wilayah', $region);
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
         return $this->db->count_all_results();
     }
 
     public function GetDebiturSubang($limit, $start, $keyword = null)
     {
         if ($keyword) {
-            $this->db->like('hari_pokok', $keyword);
+            $this->db->like('tunggakan_h', $keyword);
         }
 
         $region = "SUBANG";
-
-        $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, kd_petugas, wilayah, telepon');
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        // $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
         $this->db->where('wilayah', $region);
-        $this->db->order_by('hari_pokok', 'ACS');
-        return $this->db->get('tunggakan', $limit, $start)->result_array();
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
+        $this->db->order_by('tunggakan_h', 'ACS');
+        return $this->db->get('debitur', $limit, $start)->result_array();
     }
 
     public function CountDebiturSubang()
     {
         $region = "SUBANG";
 
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        $this->db->where('debitur.wilayah', $region);
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
+        $this->db->where('wilayah', $region);
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
         return $this->db->count_all_results();
     }
 
     public function GetDebiturPagaden($limit, $start, $keyword = null)
     {
         if ($keyword) {
-            $this->db->like('hari_pokok', $keyword);
+            $this->db->like('tunggakan_h', $keyword);
         }
 
         $region = "PAGADEN";
-
-        $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, kd_petugas, wilayah, telepon');
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        // $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
         $this->db->where('wilayah', $region);
-        $this->db->order_by('hari_pokok', 'ACS');
-        return $this->db->get('tunggakan', $limit, $start)->result_array();
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
+        $this->db->order_by('tunggakan_h', 'ACS');
+        return $this->db->get('debitur', $limit, $start)->result_array();
     }
 
     public function CountDebiturPagaden()
     {
         $region = "PAGADEN";
 
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        $this->db->where('debitur.wilayah', $region);
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
+        $this->db->where('wilayah', $region);
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
         return $this->db->count_all_results();
     }
 
     public function GetDebiturSukamandi($limit, $start, $keyword = null)
     {
         if ($keyword) {
-            $this->db->like('hari_pokok', $keyword);
+            $this->db->like('tunggakan_h', $keyword);
         }
 
         $region = "SUKAMANDI";
-
-        $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, kd_petugas, wilayah, telepon');
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        // $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
         $this->db->where('wilayah', $region);
-        $this->db->order_by('hari_pokok', 'ACS');
-        return $this->db->get('tunggakan', $limit, $start)->result_array();
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
+        $this->db->order_by('tunggakan_h', 'ACS');
+        return $this->db->get('debitur', $limit, $start)->result_array();
     }
 
     public function CountDebiturSukamandi()
     {
         $region = "SUKAMANDI";
 
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        $this->db->where('debitur.wilayah', $region);
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
+        $this->db->where('wilayah', $region);
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
         return $this->db->count_all_results();
     }
 
     public function GetDebiturJalancagak($limit, $start, $keyword = null)
     {
         if ($keyword) {
-            $this->db->like('hari_pokok', $keyword);
+            $this->db->like('tunggakan_h', $keyword);
         }
 
         $region = "JALANCAGAK";
-
-        $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, kd_petugas, wilayah, telepon');
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        // $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
         $this->db->where('wilayah', $region);
-        $this->db->order_by('hari_pokok', 'ACS');
-        return $this->db->get('tunggakan', $limit, $start)->result_array();
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
+        $this->db->order_by('tunggakan_h', 'ACS');
+        return $this->db->get('debitur', $limit, $start)->result_array();
     }
 
     public function CountDebiturJalancagak()
     {
         $region = "JALANCAGAK";
 
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        $this->db->where('debitur.wilayah', $region);
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
+        $this->db->where('wilayah', $region);
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
         return $this->db->count_all_results();
     }
 
     public function GetDebiturPusakajaya($limit, $start, $keyword = null)
     {
         if ($keyword) {
-            $this->db->like('hari_pokok', $keyword);
+            $this->db->like('tunggakan_h', $keyword);
         }
 
         $region = "PUSAKAJAYA";
-
-        $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, kd_petugas, wilayah, telepon');
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        // $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
         $this->db->where('wilayah', $region);
-        $this->db->order_by('hari_pokok', 'ACS');
-        return $this->db->get('tunggakan', $limit, $start)->result_array();
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
+        $this->db->order_by('tunggakan_h', 'ACS');
+        return $this->db->get('debitur', $limit, $start)->result_array();
     }
 
     public function CountDebiturPusakajaya()
     {
         $region = "PUSAKAJAYA";
 
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        $this->db->where('debitur.wilayah', $region);
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
+        $this->db->where('wilayah', $region);
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
         return $this->db->count_all_results();
     }
 
     public function GetDebiturPamanukan($limit, $start, $keyword = null)
     {
         if ($keyword) {
-            $this->db->like('hari_pokok', $keyword);
+            $this->db->like('tunggakan_h', $keyword);
         }
 
         $region = "PAMANUKAN";
-
-        $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, kd_petugas, wilayah, telepon');
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        // $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
         $this->db->where('wilayah', $region);
-        $this->db->order_by('hari_pokok', 'ACS');
-        return $this->db->get('tunggakan', $limit, $start)->result_array();
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
+        $this->db->order_by('tunggakan_h', 'ACS');
+        return $this->db->get('debitur', $limit, $start)->result_array();
     }
 
     public function CountDebiturPamanukan()
     {
         $region = "PAMANUKAN";
 
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        $this->db->where('debitur.wilayah', $region);
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
+        $this->db->where("tunggakan_h BETWEEN '1' AND '30'");
+        $this->db->where('wilayah', $region);
+        $this->db->where_not_in('jenis_id', '7');
+        $this->db->where_not_in('jenis_id', '10');
+        $this->db->where_not_in('jenis_id', '14');
         return $this->db->count_all_results();
     }
 
@@ -220,14 +227,10 @@ class Telebilling_Model extends ci_Model
         $user_code = $this->session->userdata('user_code');
         $tgl = date('Y-m-d');
 
-        $this->db->select('id_st, petugas_code, tgl, debitur.kd_credit, nama_debitur, no_st, user.name, pelaksanaan, d_pelaksanaan, hasil, d_hasil, catatan, tunggakan.tgk_pokok, tunggakan.tgk_denda, tunggakan.tgk_bunga, telepon, debitur.wilayah, tgl_awal, tgl_akhir, jb');
         $this->db->join('debitur', 'debitur.`kd_credit`=surat_tugas.`debitur_code`');
-        $this->db->join('tunggakan', 'tunggakan.`debitur_code`=debitur.`kd_credit`');
-        $this->db->join('waktu', 'waktu.`idwaktu`=surat_tugas.`idwaktu`');
         $this->db->join('user', 'user.`user_code`=surat_tugas.`petugas_code`');
         $this->db->where('petugas_code', $user_code);
-        //$this->db->where('tgl', $tgl);
-        $this->db->where("tgl BETWEEN tgl_awal AND tgl_akhir");
+        $this->db->where('tgl', $tgl);
         $this->db->order_by('id_st', 'DESC');
         return $this->db->get('surat_tugas', $limit, $start)->result_array();
     }
@@ -237,10 +240,8 @@ class Telebilling_Model extends ci_Model
         $tgl = date('Y-m-d');
         $user_code = $this->session->userdata('user_code');
 
-        $this->db->join('waktu', 'waktu.`idwaktu`=surat_tugas.`idwaktu`');
         $this->db->where('petugas_code', $user_code);
-        //$this->db->where('tgl', $tgl);
-        $this->db->where("tgl BETWEEN tgl_awal AND tgl_akhir");
+        $this->db->where('tgl', $tgl);
         return $this->db->count_all_results();
     }
 
@@ -295,10 +296,8 @@ class Telebilling_Model extends ci_Model
         $user_code = $this->session->userdata('user_code');
         $tgl = date('Y-m-d');
 
-        //$this->db->select('tgl, no_st, debitur.kd_credit, nama_debitur, telepon, debitur.wilayah,  hasil, d_hasil, catatan, jb, user.name, kd_petugas, name');
         $this->db->join('debitur', 'debitur.`kd_credit`=surat_tugas.`debitur_code`');
         $this->db->join('user', 'user.`user_code`=surat_tugas.`petugas_code`');
-        $this->db->join('tunggakan', 'tunggakan.`debitur_code`=debitur.`kd_credit`');
         $this->db->where('petugas_code', $user_code);
         $this->db->where('tgl', $tgl);
         $this->db->order_by('wilayah', 'ASC');
@@ -307,12 +306,11 @@ class Telebilling_Model extends ci_Model
 
     public function ExportDebitur()
     {
-        $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, user.`name`, no_cif, no_spk, alamat, metode_rps, jw, rate, plafond, telepon, name, wilayah');
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-        $this->db->where("hari_pokok BETWEEN '1' AND '30'");
-        $this->db->order_by('hari_pokok', 'ACS');
-        $this->db->order_by('wilayah', 'ACS');
+        $this->db->join('debitur', 'debitur.`kd_credit`=surat_tugas.`debitur_code`');
+        $this->db->join('user', 'user.`user_code`=surat_tugas.`petugas_code`');
+        $this->db->where('petugas_code', $user_code);
+        $this->db->where('tgl', $tgl);
+        $this->db->order_by('wilayah', 'ASC');
         return $this->db->get('tunggakan')->result_array();
     }
 }

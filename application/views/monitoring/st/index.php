@@ -109,7 +109,7 @@
 
                                                             <div class="form-group">
                                                                 <label>Debitur</label>
-                                                                <select class="form-control" style="width: 100%;" name="debitur_code" id="select2" required>
+                                                                <select class="form-control" name="debitur_code" required>
                                                                     <option value="">Select Debitur</option>
                                                                     <?php foreach ($debitur as $d) : ?>
                                                                         <?php if ($d['kd_credit'] == $s['kd_credit']) : ?>
@@ -248,7 +248,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Debitur</label>
-                        <select class="form-control select2" style="width: 100%;" name="debitur_code" id="debitur_code" required>
+                        <select class="form-control" name="debitur_code" id="debitur_code" required>
                             <option value="">Select Debitur</option>
                             <?php foreach ($debitur_wo as $d) : ?>
                                 <option value="<?= $d['kd_credit']; ?>"><?= $d['nama_debitur']; ?> - <?= $d['kd_credit']; ?> - [<?= $d['kd_petugas']; ?>]</option>

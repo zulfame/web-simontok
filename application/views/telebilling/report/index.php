@@ -43,15 +43,15 @@
                 <table class="table table-bordered" style="font-size: 10px;">
                     <thead>
                         <tr>
-                            <th class="text-center" width="4%">No</th>
-                            <th class="text-center">Date</th>
+                            <th class="text-center">No</th>
+                            <th class="text-center" width="6%">Date</th>
                             <th class="text-center">No Task</th>
                             <th class="text-center">No Credit</th>
                             <th class="text-center">Debitur</th>
-                            <th class="text-center">HR-T</th>
-                            <th class="text-center">Tgk. Pokok</th>
-                            <th class="text-center">Tgk. Bunga</th>
-                            <th class="text-center">Tgk. Denda</th>
+                            <th class="text-center" width="4%">HR-T</th>
+                            <th class="text-center" width="7%">Tgk. Pokok</th>
+                            <th class="text-center" width="7%">Tgk. Bunga</th>
+                            <th class="text-center" width="7%">Tgk. Denda</th>
                             <th class="text-center">Result</th>
                             <th class="text-center">Wilayah</th>
                             <th class="text-center">Officer</th>
@@ -73,10 +73,10 @@
                                 <td style="text-transform:uppercase;"><?= $s['no_st']; ?></td>
                                 <td><?= $s['kd_credit']; ?></td>
                                 <td><?= $s['nama_debitur']; ?></td>
-                                <td class="text-center"><?= $s['hari_pokok']; ?></td>
-                                <td class="text-center">Rp. <?= rupiah($s['tgk_pokok']); ?></td>
-                                <td class="text-center">Rp. <?= rupiah($s['tgk_bunga']); ?></td>
-                                <td class="text-center">Rp. <?= rupiah($s['tgk_denda']); ?></td>
+                                <td class="text-center"><?= $s['tunggakan_h']; ?></td>
+                                <td>Rp. <?= rupiah($s['tgk_pokok']); ?></td>
+                                <td>Rp. <?= rupiah($s['tgk_bunga']); ?></td>
+                                <td>Rp. <?= rupiah($s['tgk_denda']); ?></td>
                                 <td><?= $s['hasil'] . " ⇒ " . $s['d_hasil'] . $jb; ?></td>
                                 <td><?= $s['wilayah']; ?></td>
                                 <td class="text-center"><?= $s['kd_petugas']; ?></td>

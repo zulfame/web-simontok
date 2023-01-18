@@ -141,6 +141,11 @@
                                                             </div>
 
                                                             <div class="form-grup">
+                                                                <label>Tanggal JB</label>
+                                                                <input type="date" class="form-control" name="jb" id="jb" value="<?= $s['jb'] ?>">
+                                                            </div>
+
+                                                            <div class="form-grup">
                                                                 <label>Description</label>
                                                                 <textarea class="form-control" name="d_hasil" id="d_hasil"><?= $s['d_hasil'] ?></textarea>
                                                             </div>

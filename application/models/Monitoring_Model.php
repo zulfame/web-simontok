@@ -5,26 +5,34 @@ class Monitoring_Model extends ci_Model
     public function GetDebitur($limit, $start, $keyword = null)
     {
         if ($keyword) {
-            $this->db->like('debitur_code', $keyword);
+            $this->db->like('kd_credit', $keyword);
+            $this->db->or_like('nama_debitur', $keyword);
         }
 
         $region    = $this->session->userdata('region');
         $role_id   = $this->session->userdata('role_id');
         if ($role_id == 3) {
-            $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, user.`name`');
-            $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-            $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-            $this->db->where('debitur.`wilayah`', $region);
-            $this->db->where('debitur.`bidang`', $region);
-            $this->db->order_by('hari_pokok', 'DESC');
-            return $this->db->get('tunggakan', $limit, $start)->result_array();
+            $this->db->where('wilayah', $region);
+            $this->db->order_by('tunggakan_h', 'DESC');
+            return $this->db->get('debitur', $limit, $start)->result_array();
         } else {
-            $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, user.`name`');
-            $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-            $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-            $this->db->where('debitur.`bidang`', $region);
-            $this->db->order_by('hari_pokok', 'DESC');
-            return $this->db->get('tunggakan', $limit, $start)->result_array();
+            $this->db->where('bidang', $region);
+            $this->db->order_by('tunggakan_h', 'DESC');
+            return $this->db->get('debitur', $limit, $start)->result_array();
+        }
+    }
+
+    public function CountDebitur()
+    {
+        $region    = $this->session->userdata('region');
+        $role_id   = $this->session->userdata('role_id');
+
+        if ($role_id == 3) {
+            $this->db->where('wilayah', $region);
+            return $this->db->count_all_results();
+        } else {
+            $this->db->where('bidang', $region);
+            return $this->db->count_all_results();
         }
     }
 
@@ -33,20 +41,15 @@ class Monitoring_Model extends ci_Model
         $region    = $this->session->userdata('region');
         $role_id   = $this->session->userdata('role_id');
         if ($role_id == 3) {
-            $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, user.`name`, no_cif, no_spk, alamat, metode_rps, jw, rate, plafond, telepon');
-            $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
             $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-            $this->db->where('debitur.`wilayah`', $region);
-            $this->db->where('debitur.`bidang`', $region);
-            $this->db->order_by('hari_pokok', 'DESC');
-            return $this->db->get('tunggakan')->result_array();
+            $this->db->where('wilayah', $region);
+            $this->db->order_by('tunggakan_h', 'DESC');
+            return $this->db->get('debitur')->result_array();
         } else {
-            $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, user.`name`, no_cif, no_spk, alamat, metode_rps, jw, rate, plafond, telepon');
-            $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
             $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-            $this->db->where('debitur.`bidang`', $region);
-            $this->db->order_by('hari_pokok', 'DESC');
-            return $this->db->get('tunggakan')->result_array();
+            $this->db->where('bidang', $region);
+            $this->db->order_by('tunggakan_h', 'DESC');
+            return $this->db->get('debitur')->result_array();
         }
     }
 
@@ -63,23 +66,6 @@ class Monitoring_Model extends ci_Model
         $this->db->join('user', 'user.`user_code`=surat_tugas.`petugas_code`');
         $this->db->order_by('tgl', 'DESC');
         return $this->db->get_where('surat_tugas', ['debitur_code' => $id])->result_array();
-    }
-
-    public function CountDebitur()
-    {
-        $region    = $this->session->userdata('region');
-        $role_id   = $this->session->userdata('role_id');
-
-        if ($role_id == 3) {
-            $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-            $this->db->where('debitur.`wilayah`', $region);
-            $this->db->where('debitur.`bidang`', $region);
-            return $this->db->count_all_results();
-        } else {
-            $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-            $this->db->where('debitur.`bidang`', $region);
-            return $this->db->count_all_results();
-        }
     }
 
     // QUERY FOT SURAT TUGAS
@@ -100,7 +86,6 @@ class Monitoring_Model extends ci_Model
         $this->db->join('waktu', 'waktu.`idwaktu`=surat_tugas.`idwaktu`');
         $this->db->where('leader_code', $user_code);
         $this->db->order_by('id_st', 'DESC');
-        //$this->db->where("surat_tugas.tgl BETWEEN tgl_awal AND tgl_akhir");
         $this->db->where("tgl BETWEEN tgl_awal AND tgl_akhir");
         return $this->db->get('surat_tugas', $limit, $start)->result_array();
     }
@@ -178,7 +163,7 @@ class Monitoring_Model extends ci_Model
 
         if ($role_id == 3) {
             $this->db->where('wilayah', $region);
-            $this->db->where('bidang', $region);
+            //$this->db->where('bidang', $region);
             $this->db->order_by('nama_debitur', 'ASC');
             return $this->db->get('debitur')->result_array();
         } else {
@@ -247,7 +232,7 @@ class Monitoring_Model extends ci_Model
         $user_code = $this->session->userdata('user_code');
         $tgl = date('Y-m-d');
 
-        $this->db->select('id_st, surat_tugas.image, petugas_code, tgl, debitur.kd_credit, nama_debitur, no_st, user.name, pelaksanaan, d_pelaksanaan, hasil, d_hasil, catatan');
+        $this->db->select('id_st, surat_tugas.image, petugas_code, tgl, debitur.kd_credit, nama_debitur, no_st, user.name, pelaksanaan, d_pelaksanaan, hasil, d_hasil, catatan, jb');
         $this->db->join('debitur', 'debitur.`kd_credit`=surat_tugas.`debitur_code`');
         $this->db->join('user', 'user.`user_code`=surat_tugas.`petugas_code`');
         $this->db->where('petugas_code', $user_code);
@@ -276,6 +261,7 @@ class Monitoring_Model extends ci_Model
             "hasil"         => $this->input->post('hasil', true),
             "d_hasil"       => $this->input->post('d_hasil', true),
             "catatan"       => $this->input->post('catatan', true),
+            "jb"       => $this->input->post('jb', true),
         ];
 
         $this->db->where("id_st", $this->input->post('id_st', true));
