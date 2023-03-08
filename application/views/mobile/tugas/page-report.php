@@ -57,7 +57,7 @@
 
                         <div class="input-wrapper">
                             <label class="form-label">Tunggakan Pokok</label>
-                            <input type="text" class="form-control" name="tgk_pokok" readonly value="<?= "Rp. " . rupiah($tugas['tgk_pokok']); ?>">
+                            <input type="text" class="form-control" name="tgk_pokok" readonly value="<?= "Rp. " . rupiah($tugas['tunggakan_p']); ?>">
                         </div>
 
                         <div class=" row">
@@ -65,7 +65,7 @@
                                 <div class="form-group boxed">
                                     <div class="input-wrapper">
                                         <label class="form-label">Tunggakan Bunga</label>
-                                        <input type="text" class="form-control" name="tgk_bunga" readonly value="<?= "Rp. " . rupiah($tugas['tgk_bunga']); ?>">
+                                        <input type="text" class="form-control" name="tgk_bunga" readonly value="<?= "Rp. " . rupiah($tugas['tunggakan_b']); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                 <div class="form-group boxed">
                                     <div class="input-wrapper">
                                         <label class="form-label">Tunggakan Denda</label>
-                                        <input type="text" class="form-control" name="tgk_denda" readonly value="<?= "Rp. " . rupiah($tugas['tgk_denda']); ?>">
+                                        <input type="text" class="form-control" name="tgk_denda" readonly value="<?= "Rp. " . rupiah($tugas['tunggakan_d']); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -217,9 +217,9 @@
                                         <?= $pelaksanaan; ?> <br>
                                         <?= $hasil; ?>
                                         <hr>
-                                        <b>Tunggakan Pokok :</b> <?= "Rp. " . rupiah($debitur['tgk_pokok']); ?> <br>
-                                        <b>Tunggakan Bunga :</b> <?= "Rp. " . rupiah($debitur['tgk_bunga']); ?> <br>
-                                        <b>Tunggakan Denda :</b> <?= "Rp. " . rupiah($debitur['tgk_denda']); ?>
+                                        <b>Tunggakan Pokok :</b> <?= $t['tgk_pokok']; ?> <br>
+                                        <b>Tunggakan Bunga :</b> <?= $t['tgk_bunga']; ?> <br>
+                                        <b>Tunggakan Denda :</b> <?= $t['tgk_denda']; ?>
                                         <br><br>
                                         <span class="badge badge-warning">Catatan</span></br>
                                         <?= $catatan; ?>

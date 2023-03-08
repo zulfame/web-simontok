@@ -39,7 +39,7 @@ class Tugas extends CI_Controller
         $data['hitung'] = $this->Tugas_Model->CountSt();
         $data['undone']   = $this->Tugas_Model->UnDone();
         $data['undonewo'] = $this->Tugas_Model->UnDoneWo();
-        $data['tugas']  = $this->Tugas_Model->GetStReport($id);
+        $data['tugas']    = $this->Tugas_Model->GetStReport($id);
         $data['riwayat']        = $this->Tugas_Model->GetStHistory($uri4);
         $data['debitur']        = $this->Tugas_Model->GetDebiturId($uri4);
         $data['pelaksanaan']    = ['Penagihan ke Rumah Debitur', 'Lainnya'];

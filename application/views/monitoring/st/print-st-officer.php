@@ -16,9 +16,9 @@
 
 <body onload="window.print();">
     <?php foreach ($tugas as $t) :
-        $pokok  = $t['tgk_pokok'];
-        $bunga  = $t['tgk_bunga'];
-        $denda  = $t['tgk_denda'];
+        $pokok  = $t['tunggakan_p'];
+        $bunga  = $t['tunggakan_b'];
+        $denda  = $t['tunggakan_d'];
         $total  = $pokok + $bunga + $denda;
     ?>
         <section class="content">
@@ -93,9 +93,9 @@
                                     <tr>
                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jumlah Tagihan</td>
                                         <td> : Rp. <?= rupiah($total); ?> (&nbsp;
-                                            Pokok : Rp. <?= rupiah($t['tgk_pokok']); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            Bunga : Rp. <?= rupiah($t['tgk_bunga']); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            Denda : Rp. <?= rupiah($t['tgk_denda']); ?> &nbsp;)</td>
+                                            Pokok : Rp. <?= rupiah($t['tunggakan_p']); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            Bunga : Rp. <?= rupiah($t['tunggakan_b']); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            Denda : Rp. <?= rupiah($t['tunggakan_d']); ?> &nbsp;)</td>
                                     </tr>
                                 </thead>
                             </table>

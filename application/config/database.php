@@ -75,10 +75,17 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'zulfame',
-	'password' => '@Squas123',
-	'database' => 'zfm_simontok',
+
+	'hostname' => '103.176.96.26',
+	'username' => 'it',
+	'password' => 'BPR@4dm1n',
+	'database' => 'dummy_simontok',
+
+	// 'hostname' => 'localhost',
+	// 'username' => 'root',
+	// 'password' => '',
+	// 'database' => 'zfm_simontok',
+
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

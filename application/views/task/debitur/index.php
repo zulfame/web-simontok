@@ -22,8 +22,8 @@
 
                 <div class="box-tools">
                     <form action="<?= base_url('task/debitur') ?>" method="POST">
-                        <div class="input-group input-group-sm" style="width: 180px;">
-                            <input type="number" name="keyword" class="form-control pull-right" placeholder="Code Credit">
+                        <div class="input-group input-group-sm" style="width: 200px;">
+                            <input type="text" name="keyword" class="form-control pull-right" placeholder="Code Credit">
                             <div class="input-group-btn">
                                 <input type="submit" class="btn btn-default" name="submit" value="Search">
                             </div>
@@ -53,25 +53,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($debitur as $d) :
-                                        $hr_p = $d['hari_pokok'];
-                                        $hr_b = $d['hari_bunga'];
-                                        if ($hr_p > $hr_b) {
-                                            $tgk_hr = $hr_p;
-                                        } else {
-                                            $tgk_hr = $hr_b;
-                                        }
-                                    ?>
+                                    <?php foreach ($debitur as $d) : ?>
                                         <tr>
                                             <td class="text-center"><?= ++$page; ?></td>
                                             <td><?= $d['kd_credit']; ?></td>
                                             <td><?= $d['nama_debitur']; ?></td>
                                             <td class="text-center"><?= $d['call']; ?></td>
-                                            <td>Rp. <?= rupiah($d['baki_debet']); ?></td>
-                                            <td>Rp. <?= rupiah($d['tgk_pokok']); ?></td>
-                                            <td>Rp. <?= rupiah($d['tgk_bunga']); ?></td>
-                                            <td>Rp. <?= rupiah($d['tgk_denda']); ?></td>
-                                            <td class="text-center"><?= $tgk_hr; ?></td>
+                                            <td>Rp. <?= rupiah($d['os_akhir']); ?></td>
+                                            <td>Rp. <?= rupiah($d['tunggakan_p']); ?></td>
+                                            <td>Rp. <?= rupiah($d['tunggakan_b']); ?></td>
+                                            <td>Rp. <?= rupiah($d['tunggakan_d']); ?></td>
+                                            <td class="text-center"><?= $d['tunggakan_h']; ?></td>
                                             <td><?= $d['name']; ?></td>
                                             <td class="text-center">
                                                 <a href="<?= base_url('task/card/') . $d['kd_credit']; ?>" class="btn-circle btn-sm btn-success" target="_blank"><i class="fa fa-file-text"></i></a>

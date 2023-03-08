@@ -48,7 +48,7 @@
                                         <th class="text-center">Denda</th>
                                         <th class="text-center">Hari</th>
                                         <th class="text-center">Total</th>
-                                        <th class="text-center" width="12%">Action</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,7 +57,7 @@
                                         $tb = $d['tunggakan_b'];
                                         $td = $d['tunggakan_d'];
                                         $total = $tp + $tb + $td;
-                                        ?>
+                                    ?>
                                         <tr>
                                             <td class="text-center"><?= ++$page; ?></td>
                                             <td><?= $d['nama_debitur']; ?></td>
@@ -83,79 +83,79 @@
                                                     <div class="modal-header bg-blue">
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title">Add Report Telebilling</h4>
-                                                        </div>
-                                                        <form action="<?= base_url('telebilling/today_add'); ?>" method="POST">
-                                                            <div class="modal-body">
-
-                                                                <input type="hidden" name="kd_credit" value="<?= $d['kd_credit']; ?>" class="form-control">
-                                                                <input type="hidden" name="tgk_pokok" value="<?= $d['tunggakan_p']; ?>" class="form-control">
-                                                                <input type="hidden" name="tgk_bunga" value="<?= $d['tunggakan_b']; ?>" class="form-control">
-                                                                <input type="hidden" name="tgk_denda" value="<?= $d['tunggakan_d']; ?>" class="form-control">
-
-                                                                <input type="hidden" class="form-control" name="pelaksanaan" id="pelaksanaan" value="Tele Billing">
-                                                                <input type="hidden" class="form-control" name="d_pelaksanaan" id="d_pelaksanaan" value="Penagihan melalui telepon">
-
-                                                                <div class="form-grup">
-                                                                    <label>Result</label>
-                                                                    <select class="form-control" name="hasil" id="hasil" require>
-                                                                        <option value="">Select Option</option>
-                                                                        <?php foreach ($hasil as $h) : ?>
-                                                                            <option value="<?= $h ?>"><?= $h ?></option>
-                                                                        <?php endforeach; ?>
-                                                                    </select>
-                                                                </div>
-
-                                                                <div class="form-grup">
-                                                                    <label>Pay Promise</label>
-                                                                    <input type="date" class="form-control" name="jb" id="jb">
-                                                                </div>
-
-                                                                <div class="form-grup">
-                                                                    <label>Description</label>
-                                                                    <textarea class="form-control" name="d_hasil" id="d_hasil"></textarea>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Save</button>
-                                                            </div>
-                                                        </form>
+                                                        <h4 class="modal-title">Add Report Telebilling</h4>
                                                     </div>
+                                                    <form action="<?= base_url('telebilling/today_add'); ?>" method="POST">
+                                                        <div class="modal-body">
+
+                                                            <input type="hidden" name="kd_credit" value="<?= $d['kd_credit']; ?>" class="form-control">
+                                                            <input type="hidden" name="tgk_pokok" value="<?= $d['tunggakan_p']; ?>" class="form-control">
+                                                            <input type="hidden" name="tgk_bunga" value="<?= $d['tunggakan_b']; ?>" class="form-control">
+                                                            <input type="hidden" name="tgk_denda" value="<?= $d['tunggakan_d']; ?>" class="form-control">
+
+                                                            <input type="hidden" class="form-control" name="pelaksanaan" id="pelaksanaan" value="Tele Billing">
+                                                            <input type="hidden" class="form-control" name="d_pelaksanaan" id="d_pelaksanaan" value="Penagihan melalui telepon">
+
+                                                            <div class="form-grup">
+                                                                <label>Result</label>
+                                                                <select class="form-control" name="hasil" id="hasil" require>
+                                                                    <option value="">Select Option</option>
+                                                                    <?php foreach ($hasil as $h) : ?>
+                                                                        <option value="<?= $h ?>"><?= $h ?></option>
+                                                                    <?php endforeach; ?>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-grup">
+                                                                <label>Pay Promise</label>
+                                                                <input type="date" class="form-control" name="jb" id="jb">
+                                                            </div>
+
+                                                            <div class="form-grup">
+                                                                <label>Description</label>
+                                                                <textarea class="form-control" name="d_hasil" id="d_hasil"></textarea>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
+                                        </div>
 
 
-                                            <?php $page; ?>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <p></p>
-
-                            <!-- Pagination -->
-                            <?php echo $pagination; ?>
-                            <!-- / End Pagination -->
-
+                                        <?php $page; ?>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
+                        <p></p>
+
+                        <!-- Pagination -->
+                        <?php echo $pagination; ?>
+                        <!-- / End Pagination -->
+
                     </div>
                 </div>
-
-                <div class="box-footer">
-                    <font class="pull-left">Total Rows <strong><?= $total_rows; ?></strong></font>
-                    <font class="pull-right">Rendered in <strong>{elapsed_time}</strong></font>
-                </div>
-
             </div>
 
-            <!-- Alert Massage -->
-            <?php if (empty($debitur)) : ?>
-                <div class="callout callout-danger">
-                    <p>Debitur <b>doesn't</b> exist!</p>
-                </div>
-            <?php endif; ?>
-            <!-- End Alert Massage -->
+            <div class="box-footer">
+                <font class="pull-left">Total Rows <strong><?= $total_rows; ?></strong></font>
+                <font class="pull-right">Rendered in <strong>{elapsed_time}</strong></font>
+            </div>
 
-        </section>
-    </div>
+        </div>
+
+        <!-- Alert Massage -->
+        <?php if (empty($debitur)) : ?>
+            <div class="callout callout-danger">
+                <p>Debitur <b>doesn't</b> exist!</p>
+            </div>
+        <?php endif; ?>
+        <!-- End Alert Massage -->
+
+    </section>
+</div>

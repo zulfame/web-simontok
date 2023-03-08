@@ -21,6 +21,14 @@
 
              </div>
          </div>
+
+         <div class="alert alert-danger mb-2 mt-2 alert-dismissible fade show" role="alert">
+             Berikan keterangan <b>status</b> untuk setiap <b>prospek</b>. <a href="<?= base_url('mobile/prospek'); ?>">Buka Prospek</a>
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <ion-icon name="close-outline"></ion-icon>
+             </button>
+         </div>
+
      </div>
 
      <div class="section full mt-3 mb-3">

@@ -48,7 +48,7 @@
                                         <th class="text-center">Denda</th>
                                         <th class="text-center">Hari</th>
                                         <th class="text-center">Total</th>
-                                        <th class="text-center" width="12%">Action</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

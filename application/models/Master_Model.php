@@ -175,6 +175,14 @@ class Master_Model extends ci_Model
         }
     }
 
+    public function TunggakanDebitur($data)
+    {
+        $update = $this->db->update_batch('debitur', $data, 'kd_credit');
+        if ($update) {
+            return true;
+        }
+    }
+
     public function DeleteAllTunggakan()
     {
         $this->db->empty_table('tunggakan');

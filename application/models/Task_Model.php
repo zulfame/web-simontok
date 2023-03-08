@@ -54,6 +54,7 @@ class Task_Model extends ci_Model
             "tgk_pokok"     => $this->input->post('tgk_pokok', true),
             "tgk_bunga"     => $this->input->post('tgk_bunga', true),
             "tgk_denda"     => $this->input->post('tgk_denda', true),
+            "status"        => 1,
         ];
 
         $this->db->where("id_st", $this->input->post('id_st', true));
@@ -64,17 +65,24 @@ class Task_Model extends ci_Model
     public function GetDebitur($limit, $start, $keyword = null)
     {
         if ($keyword) {
-            $this->db->like('debitur_code', $keyword);
+            $this->db->like('kd_credit', $keyword);
+            $this->db->or_like('nama_debitur', $keyword);
         }
 
         $petugas_code = $this->session->userdata('user_code');
 
-        $this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, user.`name`');
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
+        //$this->db->select('debitur.`kd_credit`, nama_debitur, tunggakan.`call`, baki_debet, tgk_pokok, tgk_bunga, tgk_denda, hari_pokok, hari_bunga, tgl_realisasi, tgl_jth_tempo, user.`name`');
         $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-        $this->db->where('debitur.`kd_petugas`', $petugas_code);
-        $this->db->order_by('hari_pokok', 'DESC');
-        return $this->db->get('tunggakan', $limit, $start)->result_array();
+        $this->db->where('kd_petugas', $petugas_code);
+        $this->db->order_by('tunggakan_h', 'DESC');
+        return $this->db->get('debitur', $limit, $start)->result_array();
+    }
+    public function CountDebitur()
+    {
+        $petugas_code = $this->session->userdata('user_code');
+
+        $this->db->where('kd_petugas', $petugas_code);
+        return $this->db->count_all_results();
     }
 
     public function ExportDebitur()
@@ -102,16 +110,6 @@ class Task_Model extends ci_Model
         $this->db->join('user', 'user.`user_code`=surat_tugas.`petugas_code`');
         $this->db->order_by('tgl', 'DESC');
         return $this->db->get_where('surat_tugas', ['debitur_code' => $id])->result_array();
-    }
-
-    public function CountDebitur()
-    {
-        $petugas_code = $this->session->userdata('user_code');
-
-        $this->db->join('debitur', 'debitur.`kd_credit`=tunggakan.`debitur_code`');
-        $this->db->join('user', 'user.`user_code`=debitur.`kd_petugas`');
-        $this->db->where('debitur.`kd_petugas`', $petugas_code);
-        return $this->db->count_all_results();
     }
 
     public function ListDebitur()
@@ -215,5 +213,11 @@ class Task_Model extends ci_Model
 
         $this->db->where("id_prospek", $this->input->post('id_prospek', true));
         return $this->db->update("prospek", $data);
+    }
+
+    public function DeleteProspect($id)
+    {
+        $this->db->where("id_prospek", $id);
+        return $this->db->delete("prospek");
     }
 }

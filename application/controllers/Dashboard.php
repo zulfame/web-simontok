@@ -10,15 +10,18 @@ class Dashboard extends CI_Controller
             $url = base_url();
             redirect($url);
         }
+        $this->load->model('Dashboard_Model');
     }
 
     public function index()
     {
         $id = $this->session->userdata('role_id');
-        if ($id == '1' || $id == '2') {
-            $data['title']  = 'Admin & PE';
+        if ($id == '1' || $id == '2' || $id == '9') {
+            $data['title']  = 'Dashboard';
             $data['site']   = $this->Site_Model->GetData();
             $data['user']   = $this->User_Model->GetProfile();
+
+            $data['st']     = $this->Dashboard_Model->GetSt();
 
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar', $data);

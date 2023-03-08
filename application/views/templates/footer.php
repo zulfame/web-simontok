@@ -56,7 +56,7 @@
     })
 </script>
 
-<script type='text/javascript'>
+<!-- <script type='text/javascript'>
     //<![CDATA[
     shortcut = {
         all_shortcuts: {},
@@ -180,7 +180,7 @@
         top.location.href = "<?= base_url('blocked'); ?>"
     });
     //]]>
-</script>
+</script> -->
 
 <script>
     document.addEventListener("contextmenu", function(e) {

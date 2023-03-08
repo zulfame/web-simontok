@@ -106,9 +106,8 @@ class Tugas_Model extends ci_Model
         $user_code = $this->session->userdata('user_code');
         $tgl = date('Y-m-d');
 
-        $this->db->select('id_st, surat_tugas.image, petugas_code, tgl, debitur.kd_credit, nama_debitur, no_st, user.name, pelaksanaan, d_pelaksanaan, hasil, d_hasil, catatan, tunggakan.tgk_pokok, tunggakan.tgk_denda, tunggakan.tgk_bunga');
+        $this->db->select('id_st, surat_tugas.image, petugas_code, tgl, debitur.kd_credit, nama_debitur, no_st, user.name, pelaksanaan, d_pelaksanaan, hasil, d_hasil, catatan');
         $this->db->join('debitur', 'debitur.`kd_credit`=surat_tugas.`debitur_code`');
-        $this->db->join('tunggakan', 'tunggakan.`debitur_code`=debitur.`kd_credit`');
         $this->db->join('user', 'user.`user_code`=surat_tugas.`petugas_code`');
         $this->db->where('petugas_code', $user_code);
         $this->db->where('tgl', $tgl);
@@ -245,7 +244,6 @@ class Tugas_Model extends ci_Model
 
     public function GetDebiturId($uri4)
     {
-        $this->db->join('tunggakan', 'tunggakan.`debitur_code`=debitur.`kd_credit`');
         $this->db->where('kd_credit', $uri4);
         return $this->db->get('debitur')->row_array();
     }
@@ -267,6 +265,7 @@ class Tugas_Model extends ci_Model
             "tgk_pokok"     => $this->input->post('tgk_pokok', true),
             "tgk_bunga"     => $this->input->post('tgk_bunga', true),
             "tgk_denda"     => $this->input->post('tgk_denda', true),
+            "status"        => 1,
         ];
 
         $this->db->where("id_st", $this->input->post('id_st', true));

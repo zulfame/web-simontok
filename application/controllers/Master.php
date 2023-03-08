@@ -223,6 +223,7 @@ class Master extends CI_Controller
                     $tunggakan_h        = $worksheet->getCellByColumnAndRow(26, $row)->getValue();
                     $telepon            = $worksheet->getCellByColumnAndRow(27, $row)->getValue();
                     $telepon2           = $worksheet->getCellByColumnAndRow(28, $row)->getValue();
+                    $japo               = $worksheet->getCellByColumnAndRow(29, $row)->getValue();
                     $data_debitur[]     = array(
                         'id'            => $id,
                         'kd_credit'     => $kd_credit,
@@ -252,10 +253,12 @@ class Master extends CI_Controller
                         'tunggakan_h'   => $tunggakan_h,
                         'telepon'       => $telepon,
                         'telepon2'      => $telepon2,
+                        'japo'          => $japo,
                     );
                     $data_tunggakan[]   = array(
                         'idtunggakan'   => $id,
                         'debitur_code'  => $kd_credit,
+                        'call'          => 1,
                     );
                 }
             }
@@ -370,21 +373,21 @@ class Master extends CI_Controller
                     $no_spk             = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
                     $nama_debitur       = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
                     $alamat             = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
-                    $kd_petugas         = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
-                    $metode_rps         = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
-                    $jw                 = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
-                    $tgl_realisasi      = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
-                    $tgl_jth_tempo      = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
-                    $rate               = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
-                    $call               = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
-                    $wilayah            = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
-                    $plafond            = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
-                    $os_sebelumnya      = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
-                    $tgk_bunga          = $worksheet->getCellByColumnAndRow(21, $row)->getValue();
-                    $tgk_denda          = $worksheet->getCellByColumnAndRow(22, $row)->getValue();
-                    $penyelesaian       = $worksheet->getCellByColumnAndRow(23, $row)->getValue();
-                    $os_akhir           = $worksheet->getCellByColumnAndRow(24, $row)->getValue();
-                    $data_debitur[]         = array(
+                    $wilayah            = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+                    $kd_petugas         = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+                    $plafond            = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+                    $os_akhir           = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+                    $metode_rps         = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+                    $jw                 = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
+                    $tgl_realisasi      = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
+                    $tgl_jth_tempo      = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
+                    $rate               = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
+                    $call               = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
+                    $os_sebelumnya      = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
+                    $tgk_bunga          = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+                    $tgk_denda          = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
+                    $penyelesaian       = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
+                    $data_debitur[]     = array(
                         'id'            => $id,
                         'kd_credit'     => $kd_credit,
                         'no_cif'        => $no_cif,
@@ -503,6 +506,48 @@ class Master extends CI_Controller
             } else {
                 $this->session->set_flashdata('message_failed', 'Import Failed');
                 redirect('master/tunggakan');
+            }
+        } else {
+            echo "Tidak ada file yang masuk";
+        }
+    }
+
+    public function tunggakan_debitur()
+    {
+        if (isset($_FILES["fileExcel"]["name"])) {
+            $path     = $_FILES["fileExcel"]["tmp_name"];
+            $object = PHPExcel_IOFactory::load($path);
+            foreach ($object->getWorksheetIterator() as $worksheet) {
+                $highestRow        = $worksheet->getHighestRow();
+                $highestColumn     = $worksheet->getHighestColumn();
+                for ($row = 2; $row <= $highestRow; $row++) {
+                    $debitur_code   = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                    $call           = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                    $baki_debet     = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                    $hari_pokok     = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+                    $tgk_pokok      = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+                    $hari_bunga     = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+                    $tgk_bunga      = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+                    $tgk_denda      = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+                    $data_tunggakan[]    = array(
+                        'kd_credit'     => $debitur_code,
+                        'call'          => $call,
+                        'os_akhir'      => $baki_debet,
+                        'hr_p'          => $hari_pokok,
+                        'tunggakan_p'   => $tgk_pokok,
+                        'hr_b'          => $hari_bunga,
+                        'tunggakan_b'   => $tgk_bunga,
+                        'tunggakan_d'   => $tgk_denda,
+                    );
+                }
+            }
+            $insert = $this->Master_Model->TunggakanDebitur($data_tunggakan);
+            if ($insert) {
+                $this->session->set_flashdata('message', 'Imported');
+                redirect('master/debitur');
+            } else {
+                $this->session->set_flashdata('message_failed', 'Import Failed');
+                redirect('master/debitur');
             }
         } else {
             echo "Tidak ada file yang masuk";

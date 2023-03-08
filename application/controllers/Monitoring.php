@@ -18,32 +18,12 @@ class Monitoring extends CI_Controller
     // QUERY LIST DEBITUR
     public function debitur()
     {
-        // SEARCH
-        if ($this->input->post('submit')) {
-            $data['keyword'] = $this->input->post('keyword');
-            $this->session->set_userdata('keyword', $data['keyword']);
-        } else {
-            $data['keyword'] = $this->session->userdata('keyword');
-        }
-
-        // konfigurasi pagination
-        $this->db->like('kd_credit', $data['keyword']);
-        $this->db->or_like('nama_debitur', $data['keyword']);
-        $this->db->from('debitur');
-
-        $config['base_url']     = site_url('monitoring/debitur');
-        $config['total_rows']   = $this->Monitoring_Model->CountDebitur();
-        $config['per_page']     = 10;
-        $data['total_rows']     =  $config['total_rows'];
-
-        $this->pagination->initialize($config);
-        $data['pagination'] = $this->pagination->create_links();
-        $data['page']       = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $data['debitur']    = $this->Monitoring_Model->GetDebitur($config["per_page"], $data['page'], $data['keyword']);
 
         $data['title']      = 'List Debitur';
         $data['site']       = $this->Site_Model->GetData();
         $data['user']       = $this->User_Model->GetProfile();
+        $data['debitur']    = $this->Monitoring_Model->GetDebitur();
+        $data['petugas']    = $this->Monitoring_Model->ListOfficer();
         $data['wilayah']    = ['KALIJATI', 'JALANCAGAK', 'PAGADEN', 'PAMANUKAN', 'PUSAKAJAYA', 'SUBANG', 'SUKAMANDI'];
 
         $this->load->view('templates/header', $data);
@@ -228,35 +208,51 @@ class Monitoring extends CI_Controller
     }
 
     // QUERY SURAT TUGAS
+    // public function st()
+    // {
+    //     // SEARCH
+    //     if ($this->input->post('submit')) {
+    //         $data['keyword'] = $this->input->post('keyword');
+    //         $this->session->set_userdata('keyword', $data['keyword']);
+    //     } else {
+    //         $data['keyword'] = $this->session->userdata('keyword');
+    //     }
+
+    //     // konfigurasi pagination
+    //     $this->db->like('debitur_code', $data['keyword']);
+    //     $this->db->like('no_st', $data['keyword']);
+    //     $this->db->like('tgl', $data['keyword']);
+    //     $this->db->from('surat_tugas');
+
+    //     $config['base_url']     = site_url('monitoring/st');
+    //     $config['total_rows']   = $this->Monitoring_Model->CountSt();
+    //     $config['per_page']     = 10;
+    //     $data['total_rows']     =  $config['total_rows'];
+
+    //     $this->pagination->initialize($config);
+    //     $data['pagination'] = $this->pagination->create_links();
+    //     $data['page']       = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+    //     $data['st']         = $this->Monitoring_Model->GetSt($config["per_page"], $data['page'], $data['keyword']);
+
+    //     $data['title']      = 'Surat Tugas';
+    //     $data['site']       = $this->Site_Model->GetData();
+    //     $data['user']       = $this->User_Model->GetProfile();
+    //     $data['petugas']    = $this->Monitoring_Model->ListOfficer();
+    //     $data['debitur']    = $this->Monitoring_Model->ListDebitur();
+
+    //     $this->load->view('templates/header', $data);
+    //     $this->load->view('templates/topbar', $data);
+    //     $this->load->view('templates/sidebar', $data);
+    //     $this->load->view('monitoring/st/index', $data);
+    //     $this->load->view('templates/footer');
+    // }
+
     public function st()
     {
-        // SEARCH
-        if ($this->input->post('submit')) {
-            $data['keyword'] = $this->input->post('keyword');
-            $this->session->set_userdata('keyword', $data['keyword']);
-        } else {
-            $data['keyword'] = $this->session->userdata('keyword');
-        }
-
-        // konfigurasi pagination
-        $this->db->like('debitur_code', $data['keyword']);
-        $this->db->like('no_st', $data['keyword']);
-        $this->db->like('tgl', $data['keyword']);
-        $this->db->from('surat_tugas');
-
-        $config['base_url']     = site_url('monitoring/st');
-        $config['total_rows']   = $this->Monitoring_Model->CountSt();
-        $config['per_page']     = 10;
-        $data['total_rows']     =  $config['total_rows'];
-
-        $this->pagination->initialize($config);
-        $data['pagination'] = $this->pagination->create_links();
-        $data['page']       = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $data['st']         = $this->Monitoring_Model->GetSt($config["per_page"], $data['page'], $data['keyword']);
-
         $data['title']      = 'Surat Tugas';
         $data['site']       = $this->Site_Model->GetData();
         $data['user']       = $this->User_Model->GetProfile();
+        $data['st']         = $this->Monitoring_Model->GetSt();
         $data['petugas']    = $this->Monitoring_Model->ListOfficer();
         $data['debitur']    = $this->Monitoring_Model->ListDebitur();
 
@@ -278,7 +274,7 @@ class Monitoring extends CI_Controller
         } else {
             $this->Monitoring_Model->InsertSt();
             $this->session->set_flashdata('message', 'Added');
-            redirect('monitoring/st');
+            redirect('monitoring/debitur');
         }
     }
 
@@ -314,7 +310,7 @@ class Monitoring extends CI_Controller
     public function st_delete($id)
     {
         $this->Monitoring_Model->DeleteSt($id);
-        $this->session->unset_userdata('keyword');
+        //$this->session->unset_userdata('keyword');
         $this->session->set_flashdata('message', 'Deleted');
         redirect('monitoring/st');
     }
@@ -482,7 +478,7 @@ class Monitoring extends CI_Controller
         $data['title']      = 'All Prospect';
         $data['site']       = $this->Site_Model->GetData();
         $data['user']       = $this->User_Model->GetProfile();
-        $data['status']     = ['Progres', 'Closing', 'Failed'];
+        $data['list']       = ['Prospek', 'Survey', 'Lainnya'];
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $data);
@@ -529,12 +525,35 @@ class Monitoring extends CI_Controller
 
     public function prospect_add()
     {
-        $this->form_validation->set_rules('plan', 'Plan', 'required|trim');
-        $this->form_validation->set_rules('target', 'Target', 'required|trim');
+        $this->form_validation->set_rules('hunting', 'Hunting', 'required|trim');
+        $this->form_validation->set_rules('candidate', 'Candidate Name', 'required|trim');
+        $this->form_validation->set_rules('telp', 'No. Telp', 'required|trim');
+        $this->form_validation->set_rules('description', 'Description', 'required|trim');
 
         if ($this->form_validation->run() == false) {
             redirect('monitoring/prospect');
         } else {
+            $upload_image = $_FILES['image']['name'];
+
+            if ($upload_image) {
+                $petugas_name = $this->session->userdata('name');
+                $image_name   = $petugas_name . '-' . date("Y/m/d");
+
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['max_size']      = '5120';
+                $config['upload_path']   = './assets/img/prospek/';
+                $config['file_name']     = $image_name;
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('image')) {
+                    $new_image = $this->upload->data('file_name');
+                    $this->db->set('image_prospek', $new_image);
+                } else {
+                    echo $this->upload->dispay_errors();
+                }
+            }
+
             $this->Monitoring_Model->InsertProspect();
             $this->session->set_flashdata('message', 'Added');
             redirect('monitoring/prospect');
@@ -543,12 +562,41 @@ class Monitoring extends CI_Controller
 
     public function prospect_edit()
     {
-        $this->form_validation->set_rules('plan', 'Plan', 'required|trim');
-        $this->form_validation->set_rules('target', 'Target', 'required|trim');
+        $this->form_validation->set_rules('hunting', 'Hunting', 'required|trim');
+        $this->form_validation->set_rules('candidate', 'Candidate Name', 'required|trim');
+        $this->form_validation->set_rules('telp', 'No. Telp', 'required|trim');
+        $this->form_validation->set_rules('description', 'Description', 'required|trim');
 
         if ($this->form_validation->run() == false) {
             redirect('monitoring/prospect');
         } else {
+            // cek jika ada gambar yang akan diupload
+            $upload_image = $_FILES['image']['name'];
+
+            if ($upload_image) {
+                $petugas_name = $this->session->userdata('name');
+                $image_name   = $petugas_name . '-' . date("Y/m/d");
+
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['max_size']      = '5120';
+                $config['upload_path']   = './assets/img/prospek/';
+                $config['file_name']     = $image_name;
+
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('image')) {
+                    $old_image = $this->input->post('old_img');
+                    if ($old_image != 'default.png') {
+                        unlink(FCPATH . 'assets/img/prospek/' . $old_image);
+                    }
+                    $new_image = $this->upload->data('file_name');
+                    $this->db->set('image_prospek', $new_image);
+                } else {
+                    echo $this->upload->dispay_errors();
+                }
+            }
+
             $this->Monitoring_Model->UpdateProspect();
             $this->session->set_flashdata('message', 'Changed');
             redirect('monitoring/prospect');

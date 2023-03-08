@@ -82,7 +82,7 @@
                         </a>
                     </li>
                     <li>
-                        <a data-toggle="modal" data-target="#ModalForm-ks" class="btn btn-list" data-dismiss="modal">
+                        <a data-toggle="modal" data-target="#ModalForm-pt" class="btn btn-list" data-dismiss="modal">
                             <span>
                                 <ion-icon name="bookmarks-outline"></ion-icon>
                                 Prospek

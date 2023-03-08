@@ -267,6 +267,7 @@ class Telebilling_Model extends ci_Model
             "hasil"         => $this->input->post('hasil', true),
             "d_hasil"       => $this->input->post('d_hasil', true),
             "jb"            => $this->input->post('jb', true),
+            "status"        => 1,
         ];
 
         $this->db->insert('surat_tugas', $data);
@@ -304,13 +305,13 @@ class Telebilling_Model extends ci_Model
         return $this->db->get('surat_tugas')->result_array();
     }
 
-    public function ExportDebitur()
-    {
-        $this->db->join('debitur', 'debitur.`kd_credit`=surat_tugas.`debitur_code`');
-        $this->db->join('user', 'user.`user_code`=surat_tugas.`petugas_code`');
-        $this->db->where('petugas_code', $user_code);
-        $this->db->where('tgl', $tgl);
-        $this->db->order_by('wilayah', 'ASC');
-        return $this->db->get('tunggakan')->result_array();
-    }
+    // public function ExportDebitur()
+    // {
+    //     $this->db->join('debitur', 'debitur.`kd_credit`=surat_tugas.`debitur_code`');
+    //     $this->db->join('user', 'user.`user_code`=surat_tugas.`petugas_code`');
+    //     $this->db->where('petugas_code', $user_code);
+    //     $this->db->where('tgl', $tgl);
+    //     $this->db->order_by('wilayah', 'ASC');
+    //     return $this->db->get('tunggakan')->result_array();
+    // }
 }

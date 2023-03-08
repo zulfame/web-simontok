@@ -109,8 +109,9 @@ class Task extends CI_Controller
         }
 
         // konfigurasi pagination
-        $this->db->like('debitur_code', $data['keyword']);
-        $this->db->from('tunggakan');
+        $this->db->like('kd_credit', $data['keyword']);
+        $this->db->or_like('nama_debitur', $data['keyword']);
+        $this->db->from('debitur');
 
         $config['base_url']     = site_url('task/debitur');
         $config['total_rows']   = $this->Task_Model->CountDebitur();
@@ -373,7 +374,6 @@ class Task extends CI_Controller
         $data['site']       = $this->Site_Model->GetData();
         $data['user']       = $this->User_Model->GetProfile();
         $data['prospek']    = ['Prospek', 'Survey', 'Lainnya'];
-        $data['status']     = ['Closing', 'Progres', 'Failed'];
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $data);
@@ -462,5 +462,12 @@ class Task extends CI_Controller
             $this->session->unset_userdata('keyword');
             redirect('task/prospect');
         }
+    }
+
+    public function prospect_delete($id)
+    {
+        $this->Task_Model->DeleteProspect($id);
+        $this->session->set_flashdata('message', 'Deleted');
+        redirect('task/prospect');
     }
 }

@@ -135,6 +135,7 @@ class Writeoff_Model extends ci_Model
             "tgk_pokok"     => $this->input->post('tgk_pokok', true),
             "tgk_bunga"     => $this->input->post('tgk_bunga', true),
             "tgk_denda"     => $this->input->post('tgk_denda', true),
+            "status"        => 1,
         ];
 
         $this->db->where("id_st", $this->input->post('id_st', true));

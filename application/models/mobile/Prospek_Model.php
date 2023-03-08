@@ -27,6 +27,32 @@ class Prospek_Model extends ci_Model
         $this->db->insert('prospek', $data);
     }
 
+    public function GetProspek($id)
+    {
+        $this->db->where('id_prospek', $id);
+        return $this->db->get('prospek')->row_array();
+    }
+
+    public function UpdateProspek()
+    {
+        $data = [
+            "prospek"       => $this->input->post('hunting', true),
+            "calon_debitur" => $this->input->post('candidate', true),
+            "no_hp"         => $this->input->post('telp', true),
+            "keterangan"    => $this->input->post('description', true),
+            "status"        => $this->input->post('status', true),
+        ];
+
+        $this->db->where("id_prospek", $this->input->post('id_prospek', true));
+        return $this->db->update("prospek", $data);
+    }
+
+    public function DeleteProspect($id)
+    {
+        $this->db->where("id_prospek", $id);
+        return $this->db->delete("prospek");
+    }
+
     public function InsertProspectKs()
     {
         $user_code = $this->session->userdata('user_code');

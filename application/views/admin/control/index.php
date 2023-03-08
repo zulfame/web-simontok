@@ -152,7 +152,7 @@
                                                 <h3 class="box-title">Tunggakan</h3>
                                             </div>
                                             <div class="box-body table-responsive no-padding">
-                                                <form action="<?= base_url('master/tunggakan_import'); ?>" method="POST" enctype="multipart/form-data">
+                                                <form action="<?= base_url('master/tunggakan_debitur'); ?>" method="POST" enctype="multipart/form-data">
                                                     <div class="box-body">
                                                         <div class="form-group">
                                                             <label>Upload File | <a href="#">Format_Excel</a></label>

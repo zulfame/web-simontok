@@ -17,7 +17,7 @@
             <div class="box-header with-border bg-<?= $site['color']; ?>">
                 <div class="box-tools pull-left">
                     <a href="<?= base_url('monitoring/prospect'); ?>" class="btn btn-sm btn-default">PROSPECT</a>
-                    <button type="button" class="btn btn-default btn-sm" value="Refresh" onClick="document.location.reload(true)"><i class="fa fa-spin fa-refresh"></i></button>
+                    <a href="<?= base_url('monitoring/prospect_officer'); ?>" class="btn btn-sm btn-primary">OFFICER</a>
                 </div>
 
                 <div class="box-tools">
@@ -51,12 +51,16 @@
                                 <tbody>
                                     <?php $no = 1;
                                     foreach ($prospek as $p2) :
-                                        if ($p2['status'] == 'Closing') {
-                                            $sts = "success";
-                                        } elseif ($p2['status'] == 'Failed') {
-                                            $sts = "danger";
+                                        if ($p2['status'] == '0') {
+                                            $sts = "<span class='label label-warning'>Progres</span>";
                                         } else {
-                                            $sts = "warning";
+                                            $sts = "<span class='label label-success'>Closing</span>";
+                                        }
+
+                                        if ($p2['image_prospek'] == "default.png") {
+                                            $img = "danger";
+                                        } else {
+                                            $img = "primary";
                                         }
                                     ?>
                                         <tr>
@@ -66,12 +70,10 @@
                                             <td><?= $p2['calon_debitur']; ?></td>
                                             <td><?= $p2['no_hp']; ?></td>
                                             <td><?= $p2['keterangan']; ?></td>
-                                            <td><?= $p2['name']; ?></td>
+                                            <td class="text-center"><?= $p2['petugas_code']; ?></td>
+                                            <td class="text-center"><?= $sts; ?></td>
                                             <td class="text-center">
-                                                <a href="#" class="btn-circle btn-sm btn-<?= $sts; ?>"><?= $p2['status']; ?></a>
-                                            </td>
-                                            <td class="text-center">
-                                                <a data-toggle="modal" data-target="#modal-foto<?= $p2['id_prospek']; ?>" class="btn-circle btn-sm btn-primary"><i class="fa fa-picture-o"></i></a>
+                                                <a data-toggle="modal" data-target="#modal-foto<?= $p2['id_prospek']; ?>" class="btn-circle btn-sm btn-<?= $img; ?>"><i class="fa fa-picture-o"></i></a>
                                             </td>
                                         </tr>
 

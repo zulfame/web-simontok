@@ -192,9 +192,9 @@
                                         <?= $pelaksanaan; ?> <br>
                                         <?= $hasil; ?>
                                         <hr>
-                                        <b>Tunggakan Pokok :</b> <?= "Rp. " . rupiah($debitur['tgk_pokok']); ?> <br>
-                                        <b>Tunggakan Bunga :</b> <?= "Rp. " . rupiah($debitur['tgk_bunga']); ?> <br>
-                                        <b>Tunggakan Denda :</b> <?= "Rp. " . rupiah($debitur['tgk_denda']); ?>
+                                        <b>Tunggakan Pokok :</b> <?= $t['tgk_pokok']; ?> <br>
+                                        <b>Tunggakan Bunga :</b> <?= $t['tgk_bunga']; ?> <br>
+                                        <b>Tunggakan Denda :</b> <?= $t['tgk_denda']; ?>
                                         <br><br>
                                         <span class="badge badge-warning">Catatan</span></br>
                                         <?= $catatan; ?>

@@ -46,17 +46,21 @@
                                         <th class="text-center">No. Telp</th>
                                         <th class="text-center">Description</th>
                                         <th class="text-center" width="10%">Status</th>
-                                        <th class="text-center" width="8%">Action</th>
+                                        <th class="text-center" width="12%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($prospect as $p) :
-                                        if ($p['status'] == 'Closing') {
-                                            $sts = "success";
-                                        } elseif ($p['status'] == 'Failed') {
-                                            $sts = "danger";
+                                        if ($p['status'] == '0') {
+                                            $sts = "<span class='label label-warning'>Progres</span>";
                                         } else {
-                                            $sts = "warning";
+                                            $sts = "<span class='label label-success'>Closing</span>";
+                                        }
+
+                                        if ($p['image_prospek'] == 'default.png') {
+                                            $img = "danger";
+                                        } else {
+                                            $img = "primary";
                                         }
                                     ?>
                                         <tr>
@@ -66,10 +70,11 @@
                                             <td><?= $p['prospek']; ?></td>
                                             <td><?= $p['no_hp']; ?></td>
                                             <td><?= $p['keterangan']; ?></td>
-                                            <td class="text-center"><a class='btn-circle btn-sm btn-<?= $sts; ?>'><?= $p['status']; ?></a></td>
+                                            <td class="text-center"><?= $sts; ?></td>
                                             <td class="text-center">
-                                                <a class="btn-circle btn-sm btn-primary" data-toggle="modal" data-target="#modal-foto<?= $p['id_prospek']; ?>"><i class="fa fa-picture-o"></i></a>
+                                                <a data-toggle="modal" data-target="#modal-foto<?= $p['id_prospek']; ?>" class="btn-circle btn-sm btn-<?= $img; ?>"><i class="fa fa-picture-o"></i></a>
                                                 <a class="btn-circle btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit<?= $p['id_prospek']; ?>"><i class="fa fa-edit"></i></a>
+                                                <a href="<?= base_url('task/prospect_delete/') . $p['id_prospek']; ?>" class="btn-circle btn-sm btn-danger tombol-hapus"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
 
@@ -97,19 +102,6 @@
                                                         <div class="modal-body">
 
                                                             <input type="hidden" name="id_prospek" value="<?= $p['id_prospek']; ?>">
-
-                                                            <div class="form-group">
-                                                                <label>Status</label>
-                                                                <select class="form-control" name="status" id="status" required>
-                                                                    <?php foreach ($status as $s) : ?>
-                                                                        <?php if ($s == $p['status']) : ?>
-                                                                            <option value="<?= $s; ?>" selected><?= $s; ?></option>
-                                                                        <?php else : ?>
-                                                                            <option value="<?= $s; ?>"><?= $s; ?></option>
-                                                                        <?php endif; ?>
-                                                                    <?php endforeach; ?>
-                                                                </select>
-                                                            </div>
 
                                                             <div class="form-group">
                                                                 <label>Hunting</label>
@@ -144,6 +136,14 @@
                                                                 <label>Image</label>
                                                                 <input type="hidden" name="old_img" id="old_img" value="<?= $p['image_prospek']; ?>">
                                                                 <input type="file" class="form-control custom-file-input" id="image" name="image" accept=".png, .jpg, .jpeg">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Status</label>
+                                                                <select class="form-control select2" style="width: 100%;" name="status" id="status" required>
+                                                                    <option value="2">Progres</option>
+                                                                    <option value="1">Closing</option>
+                                                                </select>
                                                             </div>
 
                                                         </div>

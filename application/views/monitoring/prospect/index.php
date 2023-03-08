@@ -16,9 +16,8 @@
         <div class="box box-<?= $site['line']; ?>">
             <div class="box-header with-border bg-<?= $site['color']; ?>">
                 <div class="box-tools pull-left">
-                    <a data-toggle="modal" data-target="#modal-tambah" class="btn btn-sm btn-default">ADD PROSPECT</a>
+                    <a data-toggle="modal" data-target="#modal-tambah" class="btn btn-sm btn-primary">ADD PROSPECT</a>
                     <a href="<?= base_url('monitoring/prospect_officer'); ?>" class="btn btn-sm btn-default">OFFICER</a>
-                    <button type="button" class="btn btn-default btn-sm" value="Refresh" onClick="document.location.reload(true)"><i class="fa fa-spin fa-refresh"></i></button>
                 </div>
 
                 <div class="box-tools">
@@ -41,35 +40,55 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center" width="5%">No</th>
-                                        <th class="text-center" width="12%">Date</th>
-                                        <th class="text-center">Plan</th>
-                                        <th class="text-center">Target</th>
-                                        <th class="text-center" width="10%">Status</th>
-                                        <th class="text-center" width="10%">Action</th>
+                                        <th class="text-center" width="8%">Date</th>
+                                        <th class="text-center" width="10%">Hunting</th>
+                                        <th class="text-center">Candidate</th>
+                                        <th class="text-center" width="10%">Telp</th>
+                                        <th class="text-center">Description</th>
+                                        <th class="text-center" width="8%">Status</th>
+                                        <th class="text-center" width="13%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $no = 1;
                                     foreach ($prospek as $p) :
-                                        if ($p['status'] == 'Closing') {
-                                            $sts = "success";
-                                        } elseif ($p['status'] == 'Failed') {
-                                            $sts = "danger";
+                                        if ($p['status'] == '0') {
+                                            $sts = "<span class='label label-warning'>Progres</span>";
                                         } else {
-                                            $sts = "warning";
+                                            $sts = "<span class='label label-success'>Closing</span>";
+                                        }
+
+                                        if ($p['image_prospek'] == 'default.png') {
+                                            $img = "danger";
+                                        } else {
+                                            $img = "primary";
                                         }
                                     ?>
                                         <tr>
                                             <td class="text-center"><?= $no++; ?></td>
                                             <td class="text-center"><?= $p['tgl']; ?></td>
                                             <td><?= $p['prospek']; ?></td>
+                                            <td><?= $p['calon_debitur']; ?></td>
+                                            <td><?= $p['no_hp']; ?></td>
                                             <td><?= $p['keterangan']; ?></td>
-                                            <td class="text-center"><a class='btn-circle btn-sm btn-<?= $sts; ?>'><?= $p['status']; ?></a></td>
+                                            <td class="text-center"><?= $sts; ?></td>
                                             <td class="text-center">
+                                                <a data-toggle="modal" data-target="#modal-foto<?= $p['id_prospek']; ?>" class="btn-circle btn-sm btn-<?= $img; ?>"><i class="fa fa-picture-o"></i></a>
                                                 <a data-toggle="modal" data-target="#modal-edit<?= $p['id_prospek']; ?>" class="btn-circle btn-sm btn-warning"><i class="fa fa-edit"></i></a>
                                                 <a href="<?= base_url('monitoring/prospect_delete/') . $p['id_prospek']; ?>" class="btn-circle btn-sm btn-danger tombol-hapus"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
+
+                                        <!-- MODAL IMAGE -->
+                                        <div class="modal fade" id="modal-foto<?= $p['id_prospek']; ?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content" style="border-radius: 10px;">
+                                                    <div class="modal-body">
+                                                        <img class="img-responsive" src="<?= base_url('assets/img/prospek/') . $p['image_prospek']; ?>" style="border-radius: 10px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <!-- MODAL EDIT -->
                                         <div class="modal fade" id="modal-edit<?= $p['id_prospek']; ?>">
@@ -80,30 +99,51 @@
                                                             <span aria-hidden="true">&times;</span></button>
                                                         <h4 class="modal-title">Change Prospect</h4>
                                                     </div>
-                                                    <form action="<?= base_url('monitoring/prospect_edit'); ?>" method="POST">
+                                                    <form action="<?= base_url('monitoring/prospect_edit'); ?>" method="POST" enctype="multipart/form-data">
                                                         <div class="modal-body">
 
                                                             <input type="hidden" name="id_prospek" value="<?= $p['id_prospek']; ?>">
 
                                                             <div class="form-group">
-                                                                <label>Plan</label>
-                                                                <input type="text" name="plan" id="plan" class="form-control" value="<?= $p['prospek']; ?>">
+                                                                <label>Hunting</label>
+                                                                <select class="form-control select2" style="width: 100%;" name="hunting" id="hunting" required>
+                                                                    <option value="">Select Option</option>
+                                                                    <?php foreach ($list as $pr) : ?>
+                                                                        <?php if ($pr == $p['prospek']) : ?>
+                                                                            <option value="<?= $pr; ?>" selected><?= $pr; ?></option>
+                                                                        <?php else : ?>
+                                                                            <option value="<?= $pr; ?>"><?= $pr; ?></option>
+                                                                        <?php endif; ?>
+                                                                    <?php endforeach; ?>
+                                                                </select>
                                                             </div>
+
                                                             <div class="form-group">
-                                                                <label>Target</label>
-                                                                <textarea name="target" id="target" class="form-control"><?= $p['keterangan']; ?></textarea>
+                                                                <label>Candidate Name</label>
+                                                                <input type="text" name="candidate" id="candidate" class="form-control" value="<?= $p['calon_debitur']; ?>" required>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>No. Telp</label>
+                                                                <input type="number" name="telp" id="telp" class="form-control" value="<?= $p['no_hp']; ?>" required>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Description</label>
+                                                                <textarea name="description" id="description" cols="30" class="form-control" required><?= $p['keterangan']; ?></textarea>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Image</label>
+                                                                <input type="hidden" name="old_img" id="old_img" value="<?= $p['image_prospek']; ?>">
+                                                                <input type="file" class="form-control custom-file-input" id="image" name="image" accept=".png, .jpg, .jpeg">
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <label>Status</label>
                                                                 <select class="form-control select2" style="width: 100%;" name="status" id="status" required>
-                                                                    <?php foreach ($status as $s) : ?>
-                                                                        <?php if ($s == $p['status']) : ?>
-                                                                            <option value="<?= $s; ?>" selected><?= $s; ?></option>
-                                                                        <?php else : ?>
-                                                                            <option value="<?= $s; ?>"><?= $s; ?></option>
-                                                                        <?php endif; ?>
-                                                                    <?php endforeach; ?>
+                                                                    <option value="2">Progres</option>
+                                                                    <option value="1">Closing</option>
                                                                 </select>
                                                             </div>
 
@@ -158,16 +198,40 @@
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Add Prospect</h4>
             </div>
-            <form action="<?= base_url('monitoring/prospect_add'); ?>" method="POST">
+            <form action="<?= base_url('monitoring/prospect_add'); ?>" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
+
                     <div class="form-group">
-                        <label>Plan</label>
-                        <input type="text" name="plan" id="plan" class="form-control" value="<?= set_value('plan'); ?>">
+                        <label>Hunting</label>
+                        <select class="form-control select2" style="width: 100%;" name="hunting" id="hunting" value="<?= set_value('hunting'); ?>" required>
+                            <option value="">Select Option</option>
+                            <?php foreach ($list as $p) : ?>
+                                <option value="<?= $p; ?>"><?= $p; ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
+
                     <div class="form-group">
-                        <label>Target</label>
-                        <textarea name="target" id="target" class="form-control" value="<?= set_value('target'); ?>"></textarea>
+                        <label>Candidate Name</label>
+                        <input type="text" name="candidate" id="candidate" class="form-control" value="<?= set_value('candidate'); ?>" required>
                     </div>
+
+                    <div class="form-group">
+                        <label>No. Telp</label>
+                        <input type="number" name="telp" id="telp" class="form-control" value="<?= set_value('telp'); ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" id="description" cols="30" class="form-control" value="<?= set_value('description'); ?>" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input type="hidden" name="old_img" id="old_img" value="default.png">
+                        <input type="file" class="form-control custom-file-input" id="image" name="image" accept=".png, .jpg, .jpeg">
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
